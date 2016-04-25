@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Calculator extends Application {
 	
-	
+	private Boolean ch=false;
 	private TextField monitor=new TextField();
 	public int btdott=0;
 	private int bracketsCounter=0;
@@ -52,9 +52,26 @@ public class Calculator extends Application {
 			}
 			btdott=0;
 		}
+		
+		//check for monitor
+		public void check_monitor()
+		{
+			if(ch)
+			{
+				display=monitor.getText();
+				if(!display.endsWith("+")&&!display.endsWith("-")
+				&&!display.endsWith("*")&&!display.endsWith("/")
+				&&!display.endsWith(".")&&display.length()>0)
+				{
+				monitor.clear();
+				ch=false;
+				}
+			}
+		}	
 	
 	public void btclickedNum(ActionEvent e)
 	{
+		check_monitor();
 		display=monitor.getText();
 		if(!display.endsWith(")"))
 		{
@@ -83,7 +100,7 @@ public class Calculator extends Application {
 						  	display=""+num;
 						  	monitor.setText(display);
 						}
-						
+						ch=true;
 					  	break;
 			
 			case "âˆڑ":	if(s.length()>0)
@@ -93,7 +110,7 @@ public class Calculator extends Application {
 							display=""+num;
 							monitor.setText(display);
 						}
-						
+						ch=true;
 						break;
 						
 			case ".":	if(btdott==0&&!s.endsWith(")"))
@@ -117,7 +134,7 @@ public class Calculator extends Application {
 							display=""+num;
 							monitor.setText(display);
 						}
-						
+						ch=true;
 						break;
 						
 			case "X!":	if(s.length()>0)
@@ -130,7 +147,7 @@ public class Calculator extends Application {
 							f=Integer.parseInt(display);
 							monitor.setText(display);
 						}
-						
+						ch=true;
 						break;
 			
 			case "â†گ":	if(s.length()>0)
@@ -171,7 +188,7 @@ public class Calculator extends Application {
 				monitor.setText(display);
 			}
 			btdott=1;
-			
+			ch=true;
 			break;
 						
 			case "(":	if(s.endsWith("+")||s.endsWith("-")||s.endsWith("*")||
